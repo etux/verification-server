@@ -1,12 +1,10 @@
-# Components
-
-## Verification Server
+# Verification Server
 Central component of the solution, responsible for:
-- store immutable details from Initiators
-- allows verifiers to provide result of verification
+- registering and managing entry points [entrypoints](entry_points.md)
+- supports the verification [protocol](./diagrams/sequence_diagram_verification.puml)
 - produces proof of verification
 
-### Verification Server endpoints and webhooks
+## Verification Server endpoints and webhooks
 - endpoints
   - create verification session: endpoint to allow creating a verification session
   - create verification details: endpoint to add verification data to be evaluated by the verifier
@@ -25,6 +23,3 @@ Central component of the solution, responsible for:
   - forward verification conversation details to verifier
   - forward verification conversation details to initiator
   - calls off verification
-
-## Bot
-- 

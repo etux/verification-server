@@ -31,7 +31,7 @@ else request trusted (with user idenntifier available)
         Web -> VS: Submit verification details
         VS -> VSDS: Stores verification details
     else verification does not allow registering details
-        VS -> URL: Access details to check existence
+        VS -> Unknown: Access details to check existence
         VS -> VSDS: Store access details
     end
     VS -> Verifier: Request verification conversation (providing options)

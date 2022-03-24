@@ -13,9 +13,9 @@ In order to proceed with such verification, and considering that this is done on
 the following parties will be involved:
 
 - Initiator: human that wants/needs to be verified
-- Entrypoint: component the initiator uses to request a verification
-- Verification Server: component that orchestrates the verification process and stores verified data.
-- Web frontend: component that allows the Initiator to enter their personal details, allows the verifier to check them and to confirm verification.
+- [Entrypoint](entry_points.md): component the initiator uses to request a verification
+- [Verification Server](verification_server.md): component that orchestrates the verification process and stores verified data.
+- [Web frontend](web_frontend.md): component that allows the Initiator to enter their personal details, allows the verifier to check them and to confirm verification.
 - Verifier: human/component that does the actual verification via web cam or AI. Depending on the type of verifier:
   - human -> WebRTC: will need a secure way to contact the initiator and proceed with the verification of the details provided by the user together with his ID.
   - machine -> API: verification done by a third party

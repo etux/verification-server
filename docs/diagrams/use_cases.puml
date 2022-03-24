@@ -1,0 +1,6 @@
+@startuml
+:Initiator: --> (request_verification)
+:Verifier: --> (processes_verification)
+"Requests verification" as (request_verification)
+"Processes verification" as (processes_verification)
+@enduml
