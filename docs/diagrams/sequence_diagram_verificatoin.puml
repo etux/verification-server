@@ -6,59 +6,92 @@ actor User
 participant Bot
 
 participant VerificationServer as VS
+database VerificationDataStore as VSDS
+
 participant Web
 participant Verifier
 participant WebRTC
 
 User -> Bot: Request verification
 note right
-While we use the Bot as the entry point
-for users to request verification, it can be a web app,
-a mobile app, etc.
+- user identification
+- language
+- supported channels (conversation)
+- supports details registration (if not: accessible URL to see details)
 endnote
-
-alt request not trusted (bot has not been previously regVSter in the Identity Server)
-    Bot -> User: userId not valid/available
+alt request not valid (several reasons)
+    Bot -> User: Invalid request
 else request trusted (with user idenntifier available)
-    Bot -> VS: Request verification (with bot id + user id)
-    alt verification allows regVStering volunteer in our datastore
-        VS -> Bot: Send verification request details input URL (user id + verification request id)
-        Bot -> User: Send verification link for adding details (verification request id)
-        User -> Web: Provides data for verification process (verification request id)
-        Web -> VS: Submit verification details (verification request id)
-        VS -> VS: Stores verification details
-        VS -> Verifier: Request verification (verification request id + url to details)
-        note right
-        Verifier can be a verified volunteer
-        behind a web cam but can also be a machine
-        offering a verification API
-        endnote
-        Verifier -> Web: Access verification details
-        Web -> VS: Access user details
-    else verification does not allow regVStering volunteer in our datastore
-        VS -> Verifier: Request verification (verification request id + external url for details)
+    Bot -> VS: Creates verification session
+    VS -> VSDS: Stores verification session
+    alt verification allows registering details in our datastore
+        VS -> Bot: Send verification details request
+        Bot -> User: Sends detail request
+        User -> Web: Provides verification details
+        Web -> VS: Submit verification details
+        VS -> VSDS: Stores verification details
+    else verification does not allow registering details
+        VS -> URL: Access details to check existence
+        VS -> VSDS: Store access details
     end
-    Verifier -> VS: Accept verification Request
+    VS -> Verifier: Request verification conversation (providing options)
+    Verifier -> VS: Creates verification conversation with preferred option (e.g. WebRTC)
+    note right
+    Verifier can be a verified volunteer
+    behind a web cam but can also be a machine
+    offering a verification API
+    endnote
+    Verifier -> VS: Sends verification conversation details
     VS -> Bot: Request user availability for verification
     Bot -> User: Request user availability
-    alt user VS available
-        User -> Bot: Accepts verification call
-        Bot -> VS: Informs user VS ready for verification
-        VS -> WebRTC: Create room for Verification Request (verification request + verifier id + user id)
-        WebRTC -> VS: Room details
-        VS -> Verifier: Forward verification URL
-        VS -> Bot: Forward verification URL
-        Bot -> User: Send message with verification URL
-        Verifier -> WebRTC: Join Room
-        User -> WebRTC: Join Room
+    alt user available
+        User -> Bot: Accepts verification conversation
+        Bot -> VS: Adds user to conversation
+        VS -> Verifier: Sends verification details access
+        Verifier -> Web: Access verification details
+        Web -> VS: Access verification details
+        VS -> VSDS: Audits access to the verification details
+        alt Verifier uses WebRTC
+            VS -> WebRTC: Create channel for verification conversation
+            WebRTC -> VS: Return conversation channel details
+        else verifier uses other means
+            VS -> Unknown: Create channel for verification conversation
+            Unknown -> VS: Return conversation channel details
+            note left
+            Verifier could decide to use other
+            means to have a conversation, such as:
+            Telegram
+            ...
+            endnote
+        end
+        VS -> Verifier: Sends conversation details
+        VS -> Bot: Sends conversation details
+        Bot -> User: Send message with conversation link
+        alt Verifier uses WebRTC
+            Verifier -> WebRTC: Join Room
+            User -> WebRTC: Join Room
+        else Verifier uses other means
+            Verifier -> Unknown: Join channel
+            User -> Unknown: Join channel
+        end
         Verifier -> VS: Send verification result
-        VS -> VS: Stores verification result (audited)
+        VS -> VSDS: Stores verification result (audited)
         VS -> Bot: Send verification result
+        note right
+        Verification result may include
+        VS private key signed message
+        including own generated identifier
+        used to consult identity of the User
+        (Can be transformed in a QRCode)
+        endnote
         Bot -> User: Send verification result
-    else user VS not available (or does not respond in x time)
+    else user not available (or does not respond in x time)
+        Bot -> VS: User not available
+        VS -> Verifier: suspends verification
+    else user rejects verification
         User -> Bot: Rejects verification call
-        Bot -> VS: Informs user VS not ready for verification
-        VS -> Verifier: calls off verification
+        Bot -> VS: calls off verification
+        VS -> Verifier: terminates verification
     end
 end
 
