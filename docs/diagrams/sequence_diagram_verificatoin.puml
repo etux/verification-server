@@ -22,16 +22,16 @@ endnote
 alt request not valid (several reasons)
     Bot -> User: Invalid request
 else request trusted (with user idenntifier available)
-    Bot -> VS: Creates verification session
+    Bot -> VS: Creates verification session POST /api/sessions
     VS -> VSDS: Stores verification session
     alt verification allows registering details in our datastore
         VS -> Bot: Send verification details request
         Bot -> User: Sends detail request
         User -> Web: Provides verification details
-        Web -> VS: Submit verification details
+        Web -> VS: Submit verification details POST /api/sessions/{sessionId}/details
         VS -> VSDS: Stores verification details
     else verification does not allow registering details
-        VS -> Unknown: Access details to check existence
+        VS -> Unknown: Access details to check existence ?
         VS -> VSDS: Store access details
     end
     VS -> Verifier: Request verification conversation (providing options)

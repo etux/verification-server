@@ -12,7 +12,7 @@ This introduces the requirement of some kind of verification, such as national I
 In order to proceed with such verification, and considering that this is done on the Internet (remotely), 
 the following parties will be involved:
 
-- Initiator: human that wants/needs to be verified
+- [Initiator](initiators.md): human that wants/needs to be verified
 - [Entrypoint](entry_points.md): component the initiator uses to request a verification
 - [Verification Server](verification_server.md): component that orchestrates the verification process and stores verified data.
 - [Web frontend](web_frontend.md): component that allows the Initiator to enter their personal details, allows the verifier to check them and to confirm verification.

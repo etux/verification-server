@@ -1,6 +1,8 @@
+import com.cosminpolifronie.gradle.plantuml.tasks.PlantUmlTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+	id("com.cosminpolifronie.gradle.plantuml") version  "1.6.0"
 	id("org.springframework.boot") version "2.6.4"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	id("org.asciidoctor.convert") version "1.5.8"
@@ -43,6 +45,16 @@ dependencyManagement {
 	}
 }
 
+plantUml {
+	render(
+		mapOf(
+			"input" to "docs/diagrams/*.puml",
+			"output" to "build/docs/diagrams",
+			"format" to "png"
+		)
+	)
+}
+
 tasks {
 	withType<KotlinCompile> {
 		kotlinOptions {
@@ -59,5 +71,11 @@ tasks {
 	asciidoctor {
 //		inputs.dir(property("snippetsDir"))
 		dependsOn(test)
+	}
+
+	register<Copy>("copyDocs") {
+		dependsOn(plantUml)
+		from( layout.projectDirectory.dir("docs"))
+		into(layout.buildDirectory.dir("docs"))
 	}
 }
