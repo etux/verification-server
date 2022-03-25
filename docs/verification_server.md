@@ -1,13 +1,16 @@
 # Verification Server
 Central component of the solution, responsible for:
-- registering and managing entry points [entrypoints](entry_points.md)
+- registering and managing `EntryPoint` [entrypoints](entry_points.md)
+  - creating an access key for the `EntryPoint`
+  - exchange of Public Keys between `EntryPoint` and `VerificationServer`
 - supports the verification [protocol](./diagrams/sequence_diagram_verification.png)
-- produces proof of verification
+- produces [`VerificationResult`](verification_result.md)s as proof of verification
 
 ## Verification Server endpoints
 - entrypoints
-  - [`POST /api/entrypoint`](http://localhost/path_to_generated_docs): registers an entry point
-  - [`DELETE /api/entrypoint`](http://localhost/path_to_generated_docs): cancels an entry point
+  - [`POST /api/entrypoint`](http://localhost/path_to_generated_docs): registers an entry point.
+  - [`GET /api/entrypoint`](): Retrieves the entrypoint details.
+  - [`DELETE /api/entrypoint`](http://localhost/path_to_generated_docs): cancels an entry point.
 - sessions
   - [`POST /api/sessions`](http://localhost/path_to_generated_docs): create verification session: endpoint to allow creating a verification session.
   - [`GET /api/sessions`](http://localhost/path_to_generated_docs): lists sessions relevant for the authenticated user.
@@ -34,4 +37,4 @@ Central component of the solution, responsible for:
   - send verification request availability to verifier
   - forward verification conversation details to verifier
 - `Channel`:
-  - create room for `VerificationConversation` between `Initiator` and `Verifier`
+  - enables the communication for a `VerificationConversation` between `Initiator` and `Verifier`

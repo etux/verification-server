@@ -4,6 +4,7 @@
 - status: [pending|successful|failed|revoked]
 - verified user: Unique user id assigned by the `VerificationServer`
 - verified by: Unique user id assigned by the `VerificationServer`
+- verified through: `Channel` through which the `VerificationConversation` took place.
 - expires: Time of expiration of the given verification result
 - self: URL referencing this verification result
 - signature: `VerificationServer`'s server signature of the above information with its private key.

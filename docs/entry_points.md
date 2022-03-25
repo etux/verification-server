@@ -29,6 +29,12 @@ communication between the `Initiator` and the `Verifier`.
 
 
 ## Telegram Entry Point
+Using Telegram to start a `VerificationSession`
+
 ## Google Entry Point
+Using Google Authentication to start a `VerificationSession`
+
 ## Facebook Entry Point
+Using Facebook to start a `VerificationSession`
+
 ## Other parties...
