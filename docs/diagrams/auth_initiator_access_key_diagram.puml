@@ -1,0 +1,17 @@
+@startuml
+
+actor EntryPoint
+
+participant VerificationServer as VS
+
+database VerificationDataStore as VSDS
+
+EntryPoint -> VS: Authentication Request (with access key)
+VS -> VSDS: checks access key
+alt Valid AccessKey
+    VS -> User: JWT Token
+else InvalidCredentials:
+    VS -> User: Error + SELF URL
+end
+
+@enduml
