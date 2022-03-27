@@ -2,12 +2,14 @@ import com.cosminpolifronie.gradle.plantuml.tasks.PlantUmlTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+	id("org.jetbrains.kotlin.plugin.noarg") version "1.6.10"
 	id("com.cosminpolifronie.gradle.plantuml") version  "1.6.0"
 	id("org.springframework.boot") version "2.6.4"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	id("org.asciidoctor.convert") version "1.5.8"
 	kotlin("jvm") version "1.6.10"
 	kotlin("plugin.spring") version "1.6.10"
+	`java-test-fixtures`
 }
 
 group = "org.help.ukraine.verification"
@@ -30,11 +32,16 @@ dependencies {
 	implementation("org.flywaydb:flyway-core")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("io.jsonwebtoken:jjwt:0.9.1")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+
 	runtimeOnly("org.postgresql:postgresql")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	testFixturesApi("org.springframework.boot:spring-boot-starter-test")
+	testFixturesApi("org.mockito.kotlin:mockito-kotlin:4.0.0")
+	testFixturesApi("org.springframework.security:spring-security-test")
 	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:postgresql")
 }
