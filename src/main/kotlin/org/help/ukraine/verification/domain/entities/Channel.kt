@@ -1,5 +1,6 @@
 package org.help.ukraine.verification.domain.entities
 
-class Channel {
-
-}
+data class Channel(
+    val type: String,
+    val identifier: String
+)

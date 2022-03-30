@@ -1,7 +1,7 @@
 package org.help.ukraine.verification.presentation.controllers
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.hamcrest.Matchers.notNullValue
+import org.hamcrest.Matchers.*
 import org.help.ukraine.verification.presentation.jwt.JwtTokenUtil
 import org.help.ukraine.verification.presentation.jwt.TestUserDetails
 import org.help.ukraine.verification.tf.configurations.TestSecurityConfiguration
@@ -51,8 +51,13 @@ internal class SessionControllerIntegrationTest {
                     )
                 )
         )
+            .andDo(MockMvcResultHandlers.print())
             .andExpect(status().isCreated)
-            .andExpect(header().exists("location"))
+            .andExpect(header().string("location", matchesPattern("http://localhost/api/sessions/[-0-9a-zA-Z]+")))
+            .andExpect(jsonPath("$.id", notNullValue()))
+            .andExpect(jsonPath("$.signature", notNullValue()))
+            .andExpect(jsonPath("$.location", matchesPattern("http://localhost/api/sessions/[-0-9a-zA-Z]+")))
+            .andExpect(jsonPath("$.inputDetailsLocation", matchesPattern("http://localhost:8080/ui/sessions/[-0-9a-zA-Z]+/details")))
     }
 
     private fun create() = TestUserDetails(

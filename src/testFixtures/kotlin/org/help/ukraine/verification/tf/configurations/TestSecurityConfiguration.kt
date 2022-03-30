@@ -17,7 +17,7 @@ class TestSecurityConfiguration {
             .passwordEncoder(passwordEncoder::encode)
             .username(DEFAULT_USERNAME)
             .password(DEFAULT_PASSWORD)
-            .roles("USER")
+            .roles("USER", "ENTRYPOINT")
             .build()
         return InMemoryUserDetailsManager(user)
     }
