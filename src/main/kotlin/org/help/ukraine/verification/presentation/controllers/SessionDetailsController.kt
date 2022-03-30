@@ -30,7 +30,9 @@ class SessionDetailsController(
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('VERIFIER')")
-    fun getDetails(@PathVariable("sessionId") sessionId: UUID) = map(sessionService.getInputDetails(sessionId))
+    fun getDetails(
+        @PathVariable("sessionId") sessionId: UUID
+    ) = map(sessionService.getInputDetails(sessionId))
 
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)

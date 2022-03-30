@@ -90,7 +90,9 @@ class SessionServiceImp(
     }
 
     companion object {
+
         const val EXPIRATION_TIME_IN_MILLIS: Long = 24 * 60 * 60 * 1000
+
         val logger: Logger = LoggerFactory.getLogger(SessionServiceImp::class.java)
     }
 }

@@ -12,6 +12,7 @@ class TestUserDetails(
     private val isCredentialsExpired: Boolean = false,
     private val isDisabled: Boolean = false
 ): UserDetails {
+
     override fun getAuthorities() = authorities
 
     override fun getPassword() = password
