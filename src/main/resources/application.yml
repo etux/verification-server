@@ -1,0 +1,4 @@
+jwt:
+  secret: somethingverysecret
+  token:
+    expiration-time-millis: 1800000

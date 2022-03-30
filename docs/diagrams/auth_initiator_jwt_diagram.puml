@@ -1,0 +1,19 @@
+@startuml
+
+actor EntryPoint
+
+participant VerificationServer as VS
+
+database VerificationDataStore as VSDS
+
+EntryPoint -> VS: Any ReST call containing JWT token as Authorization header
+VS -> VSDS: checks JWT
+alt Valid JWT
+    VS -> VS: Proceeds with the request
+    VS -> EntryPoint: Returns expected result
+else Invalid JWT
+    VS -> EntryPoint: Error
+    note right: + access token authorization endpoint
+end
+
+@enduml

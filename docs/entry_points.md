@@ -18,14 +18,14 @@ An entry point is responsible for providing one or more [`Channel`](channel.md)'
 communication between the `Initiator` and the `Verifier`.
 
 ## Entrypoint endpoints
-- [`PUT /api/{userId}`](): receives `VerificationDetails` from the `VerificationServer`.
+- [`PUT /api/{userId}/verification`](): receives the pointer to fill in `VerificationDetails` from the `VerificationServer`.
 - [`POST /api/{userId}/notification`](): receives availability requests from `VerificationServer` to wake up the user.
 - [`POST /api/{userId}/conversation`](): receives the conversation details to allow the `Initiator` to join it.
 - [`PUT /api/{userId}/result`](): receives the results of the verification for the `Initiator` to keep.
 
 ## Entrypoint dependencies
 - `VerificationServer`: to complete the verification process.
-- `Channel`: to allow the `Initiator` to join a `VerificationConversation`
+- `Channel`: to allow the `Initiator` to join a `VerificationConversation` with the `Verifier`
 
 
 ## Telegram Entry Point

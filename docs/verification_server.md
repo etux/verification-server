@@ -6,13 +6,38 @@ Central component of the solution, responsible for:
 - supports the verification [protocol](./diagrams/sequence_diagram_verification.png)
 - produces [`VerificationResult`](verification_result.md)s as proof of verification
 
+## Sessions
+Verification sessions are responsible for keeping the state of the verification process.
+
+### Creating a session
+The are initiated by the `Initiator` when requesting to be verified through the endpoint [`POSt /api/sessions`]
+Requires `EbtryPoint` role.
+
+
+#### Request
+| Header         | Mandatory | Values   | Description                |
+|----------------|-----------|----------|----------------------------|
+| Authorization  | true      | jwtToken | Credentials of the client. |
+
+
+#### Body
+```json
+{
+  "entrypointId": "string",
+  "userIdentifier": "",
+  "additionalInfo" : {}
+}
+```
+Note: `AdditionalInfo`is optional and its content may vary depending on the `EntryPoint`
+
+
 ## Verification Server endpoints
 - entrypoints
   - [`POST /api/entrypoint`](http://localhost/path_to_generated_docs): registers an entry point.
   - [`GET /api/entrypoint`](): Retrieves the entrypoint details.
   - [`DELETE /api/entrypoint`](http://localhost/path_to_generated_docs): cancels an entry point.
 - sessions
-  - [`POST /api/sessions`](http://localhost/path_to_generated_docs): create verification session: endpoint to allow creating a verification session.
+  - [`POST /api/sessions`](http://localhost/path_to_generated_docs): create verification session: endpoint to allow creating a verification session. Used by `Initiator`
   - [`GET /api/sessions`](http://localhost/path_to_generated_docs): lists sessions relevant for the authenticated user.
   - [`DELETE /api/sessions/{sessionId}`](http://localhost/path_to_generated_docs): delete verification session: endpoint to cancel a verification session.
   - [`POST /api/sessions/{sessionId}/details`](http://localhost/path_to_generated_docs): add details to verification session: endpoint to add verification data to be evaluated by the verifier.
