@@ -10,8 +10,7 @@ import java.time.Clock
 class SessionRequestMapper(private val clock: Clock) : Mapper<Pair<SessionRequestDto, User>, SessionCreateRequest> {
     override fun map(input: Pair<SessionRequestDto, User>) = SessionCreateRequest(
         entrypointId = input.first.entrypointId,
-        userIdentifier = input.first.userIdentifier,
-        user = input.second,
-        instant = clock.instant()
+        entrypointUserIdentifier = input.first.userIdentifier,
+        entryPointUser = input.second
     )
 }

@@ -2,3 +2,7 @@ jwt:
   secret: somethingverysecret
   token:
     expiration-time-millis: 1800000
+
+services:
+  session:
+    input-details: http://localhost:8080/ui/sessions/{sessionId}/details

@@ -2,6 +2,7 @@ package org.help.ukraine.verification.presentation.controllers
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.hamcrest.Matchers
+import org.help.ukraine.verification.presentation.jwt.JwtTokenUtil
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
@@ -11,10 +12,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @IntegrationTest
-class AuthenticationControllerIntegrationTest {
-
-    @Autowired
-    private lateinit var mockMvc: MockMvc
+class AuthenticationControllerIntegrationTest @Autowired constructor(
+    override val mockMvc: MockMvc,
+    override val jwtTokenUtil: JwtTokenUtil
+) : BaseControllerIntegrationTest(mockMvc, jwtTokenUtil) {
 
     @Autowired
     private lateinit var objectMapper: ObjectMapper

@@ -7,16 +7,22 @@ data class Session(
     val id: UUID = UUID.randomUUID(),
     val createdBy: String,
     val createdAt: Instant,
-    val creatorPreferences: UserPreferences,
-    val creatorMetadata: UserMetadata
+    val expiresAt: Instant,
+    val initiatorPreferences: UserPreferences,
+    val entryPointMetadata: EntryPointMetadata,
+    val signature: String,
+    val inputDetails: InputDetails,
 ) {
     companion object {
         val NON_EXISTING = Session(
             id = UUID.fromString("00000000-0000-0000-0000-000000000000"),
             createdBy = "",
             createdAt = Instant.ofEpochMilli(0),
-            creatorPreferences = UserPreferences.NON_EXISTING,
-            creatorMetadata = UserMetadata.NON_EXISTING
+            expiresAt = Instant.ofEpochMilli(0),
+            initiatorPreferences = UserPreferences.NON_EXISTING,
+            entryPointMetadata = EntryPointMetadata.NON_EXISTING,
+            signature = "",
+            inputDetails = InputDetails.NON_EXISTING
         )
     }
 }
